@@ -2,14 +2,22 @@ const container = document.getElementById("container");
 const slider = document.getElementById("gridSize");
 const output = document.getElementById("gridValue");
 const resetButton = document.getElementById('reset');
+const rainbowButton = document.getElementById('rainbow');
 const maxSize = window.innerWidth / 8;
 
-function changeColor(e) {
-	e.target.style.backgroundColor = 'black';
+function random_rgba() {
+    let o = Math.round, r = Math.random, s = 255;
+    return 'rgba(' + o(r()*s) + ',' + o(r()*s) + ',' + o(r()*s) + ',' + r().toFixed(1) + ')';
 }
 
 function changeColor(e) {
-	e.target.style.backgroundColor = 'black';
+	let color;
+	if (rainbow) {
+		color = random_rgba();
+	} else {
+		color = 'black'
+	}
+	e.target.style.backgroundColor = color;
 }
 
 function buildGrid(gridSize) {
@@ -29,6 +37,8 @@ function resetGrid() {
 }
 
 let gridSize = slider.value;
+let rainbow = false;
+
 output.innerHTML = gridSize;
 
 slider.oninput = function() {
@@ -38,5 +48,12 @@ slider.oninput = function() {
 }
 
 resetButton.onclick = () => resetGrid();
+rainbowButton.onclick = () => {
+	if (rainbow) {
+		rainbow = false;
+	} else {
+		rainbow = true;
+	}
+};
 
 window.onload = (buildGrid(gridSize, gridSize));
